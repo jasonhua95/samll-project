@@ -12,6 +12,10 @@ namespace MoreLanguage.Controllers
         // GET: Zh
         public ActionResult Index()
         {
+            ViewBag.testsession = HttpContext.Session.GetString("test");
+            string testcookie;
+            Request.Cookies.TryGetValue("testcookie", out testcookie);
+            ViewBag.testcookie = testcookie;
             return View();
         }
     }

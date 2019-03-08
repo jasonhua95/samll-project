@@ -12,6 +12,8 @@ namespace MoreLanguage.Controllers
         // GET: En
         public ActionResult Index()
         {
+            HttpContext.Session.SetString("test", "session添加成功");
+            Response.Cookies.Append("testcookie", "cookie添加成功");
             return View();
         }
     }
