@@ -6,4 +6,5 @@
  > 2. 第一种：www.xxx.com/en/index; www.xxx.com/zh/index; 
  > 3. 第二种: www.xxx.com/index/en; www.xxx.com/index/zh 
  > 4. 第一种一般用于两个项目差别比较大的情况，第二种一般用于项目只有内容不同，其他的都相同的情况
+ > 5. 增加session和cookie的使用
  ![如图](https://github.com/jasonhua95/samll-project/blob/master/image/001.PNG)
