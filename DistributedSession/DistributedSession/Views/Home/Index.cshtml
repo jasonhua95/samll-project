@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "SetSession";
+}
+<h2>session的操作1</h2>
+
+<div class="panel panel-default SetSession" data-seturl="@Url.Action("SetSession","Home")">
+    <div class="panel-heading">设置session</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-3">
+                key: <input class="form-control key" />
+            </div>
+            <div class="col-xs-3">
+                value: <input class="form-control value" />
+            </div>
+            <div class="col-xs-3"><button style="margin-top:20px;" class="btn btn-default" type="button">提交</button></div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default GetSession" data-geturl="@Url.Action("GetSession","Home")">
+    <div class="panel-heading">获取session</div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-3">
+                key: <input class="form-control key" />
+            </div>
+            <div class="col-xs-3">
+                value: <p class="form-control value"></p>
+            </div>
+            <div class="col-xs-3"><button style="margin-top:20px;" class="btn btn-default" type="button">获取</button></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(".SetSession").on("click", ".btn-default", function () {
+            var key = $(".SetSession .key").val();
+            var value = $(".SetSession .value").val();
+            if (key != null && value != null && key.trim() != "" && value.trim() != "") {
+                $.post($(".SetSession").data("seturl"), { key: key, value: value }, function (data) {
+                    if (data.success) { alert("保存成功！"); }
+                });
+            }
+        });
+
+        $(".GetSession").on("click", ".btn-default", function () {
+            $(".GetSession .value").text("");
+            var key = $(".GetSession .key").val();
+            if (key != null && key.trim() != "") {
+                $.get($(".GetSession").data("geturl"), { key: key }, function (data) {
+                    if (data.success) { $(".GetSession .value").text(data.data); }
+                });
+            }
+        });
+
+    </script>
+}
