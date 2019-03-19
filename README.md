@@ -16,3 +16,10 @@
 > 3. 通过nginx来做负载均衡，实现一个网址调用不同的服务器
 > 4. 缓存将可以替换session，完全不用session
 ![如图](https://github.com/jasonhua95/samll-project/blob/master/image/002.PNG)
+
+### OcelotStudy
+Ocelot是一个用.NET Core实现并且开源的API网关，它功能强大，包括了：路由、认证、鉴权、简单缓存、限流熔断、负载均衡器等。简单的来说Ocelot是一堆的asp.net core middleware组成的一个有顺序的管道。当它拿到请求之后会用一个request builder来构造一个HttpRequestMessage发到下游的真实服务器，等下游的服务返回response之后再由一个middleware将它返回的HttpResponseMessage映射到HttpResponse上。
+> 1. 这是一个ASP.NET Core Web项目，主要展示Ocelot的使用
+> 2. 实现Ocelot来控制访问
+> 3. 实现Ocelot来控制负载均衡
+![如图](https://github.com/jasonhua95/samll-project/blob/master/image/003.PNG)
