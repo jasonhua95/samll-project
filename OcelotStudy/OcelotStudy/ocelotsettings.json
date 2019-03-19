@@ -1,0 +1,79 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/values/{action}", //下游服务配置
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 54679
+        },
+        {
+          "Host": "localhost",
+          "Port": 57417
+        }
+      ],
+      "UpstreamPathTemplate": "/values/{action}", //上游服务配置
+      "UpstreamHttpMethod": [
+        "Get"
+      ],
+      //"AddHeadersToRequest": {},
+      //"AddClaimsToRequest": {},
+      //"RouteClaimsRequirement": {},  //配置Claims鉴权
+      //"AddQueriesToRequest": {},
+      //"RequestIdKey": "",
+      //"FileCacheOptions": {  //缓存配置
+      //  "TtlSeconds": 0,
+      //  "Region": ""
+      //},
+      //"ReRouteIsCaseSensitive": false,
+      //"ServiceName": "",
+      //"QoSOptions": {   //服务质量与熔断
+      //  "ExceptionsAllowedBeforeBreaking": 3,
+      //  "DurationOfBreak": 10,
+      //  "TimeoutValue": 5000
+      //},
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      } //LoadBalancer将决定负载均衡的算法,LeastConnection – 将请求发往最空闲的那个服务器,RoundRobin – 轮流发送,NoLoadBalance – 总是发往第一个请求或者是服务发现
+      //"RateLimitOptions": {  //为限流配置
+      //  "ClientWhitelist": [],
+      //  "EnableRateLimiting": false,
+      //  "Period": "",
+      //  "PeriodTimespan": 0,
+      //  "Limit": 0
+      //},
+      //"AuthenticationOptions": {  //配置服务认证
+      //  "AuthenticationProviderKey": "",
+      //  "AllowedScopes": []
+      //},
+      //"HttpHandlerOptions": {
+      //  "AllowAutoRedirect": false,
+      //  "UseCookieContainer": false
+      //  //"UseTracing": true
+      //}
+      //"UseServiceDiscovery": false,  // 配置服务发现
+    }
+    //{
+    //  "DownstreamPathTemplate": "/{url}",
+    //  "DownstreamScheme": "https",
+    //  "DownstreamHostAndPorts": [
+    //    {
+    //      "Host": "localhost",
+    //      "Port": 80
+    //    }
+    //  ],
+    //  "UpstreamPathTemplate": "/{url}",
+    //  "UpstreamHttpMethod": [ "Get" ]
+    //}
+  ]
+  //"Aggregates": [ //服务聚合配置
+  //  {
+  //    "ReRouteKeys": [
+  //      "Tom",
+  //      "Laura"
+  //    ],
+  //    "UpstreamPathTemplate": "/"
+  //  }
+  //]
+}
