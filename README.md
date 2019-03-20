@@ -1,5 +1,5 @@
-# samll-project
-平时创建的小项目
+# small-project
+平时创建的小项目，项目名称【samll-project】创建错误，不做修改
 
 ### MoreLanguage
  > 1. 这是一个ASP.NET Core Web多语言项目，主要展示项目的不同：
