@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading;
 
 /// <summary>
-/// 接收信息
+/// 发送信息
 /// </summary>
 namespace SendMQ
 {

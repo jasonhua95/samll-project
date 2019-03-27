@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 
 /// <summary>
-/// 发送信息
+/// 接收信息
 /// </summary>
 namespace ReceiveMQ
 {
