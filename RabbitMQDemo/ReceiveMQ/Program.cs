@@ -35,6 +35,7 @@ namespace ReceiveMQ
                 };
 
                 while (true) {
+
                     channel.BasicConsume(queue: "hello",
                                          autoAck: true,
                                          consumer: consumer);
