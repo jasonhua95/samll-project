@@ -14,8 +14,8 @@
 > 1. 这是一个ASP.NET Core Web项目，主要展示redis的分布式缓存和负载均衡
 > 2. 项目发布两次到不同的文件夹，IIS上配置
 > 3. 通过nginx来做负载均衡，实现一个网址调用不同的服务器
-![配置](https://github.com/jasonhua95/samll-project/blob/master/image/00201.PNG)
-![效果图](https://github.com/jasonhua95/samll-project/blob/master/image/00202.PNG)
+![配置](https://github.com/jasonhua95/samll-project/blob/master/image/00201.png)
+![效果图](https://github.com/jasonhua95/samll-project/blob/master/image/00202.png)
 > 4. 缓存将可以替换session，完全不用session
 ![如图](https://github.com/jasonhua95/samll-project/blob/master/image/002.PNG)
 
