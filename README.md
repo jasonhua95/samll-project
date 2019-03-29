@@ -36,3 +36,12 @@ RabbitMQ是实现了高级消息队列协议（AMQP）的开源消息代理软�
 > 3. SendMQ发送消息项目
 > 4. 如果发送的信息很多的时候，可以启动多个消费者（ReceiveMQ）
 ![如图](https://github.com/jasonhua95/samll-project/blob/master/image/004.PNG)
+
+### DynamicNews
+门户网站经常会遇到有公告、新闻之类的，这类数据每次查询会浪费服务器性能，所有产生了这样一个项目，可以根据模板自动生成所需要的html文件
+
+> 1. 这是一个ASP.NET Core Web项目，主要展示根据模板html自动生成需要的html页面
+> 2. 初步预想步骤：
+	> > 1. 根据模板生成tag
+	> > 2. 填写新闻
+	> > 3. 生成新闻页面
