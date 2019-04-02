@@ -45,3 +45,8 @@ RabbitMQ是实现了高级消息队列协议（AMQP）的开源消息代理软�
  >> 1. 根据模板生成tag
  >> 2. 填写新闻
  >> 3. 生成新闻页面
+ 
+### Utils
+.NET Core项目的工具类
+
+> 1. ReplaceRenderer.cs 替换渲染器，使用方法：await ReplaceRenderer.ParseAsync("hi @UserName,年龄： @Age，小名：@XiaoName 。", new { UserName = "测试", Age = 19, XiaoName = "小明" })
