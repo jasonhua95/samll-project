@@ -1,6 +1,11 @@
 # small-project
 平时创建的小项目，项目名称【samll-project】创建错误，不做修改
 
+### Github上指定项目的下载
+> 1.点击[下载](https://minhaskamal.github.io/DownGit/#/home)
+> 2.输入下载的地址
+> 3.例如：输入：https://github.com/jasonhua95/samll-project/tree/master/DistributedSession   下载DistributedSession项目
+
 ### MoreLanguage
  > 1. 这是一个ASP.NET Core Web多语言项目，主要展示项目的不同：
  > 2. 第一种：www.xxx.com/en/index; www.xxx.com/zh/index; ，这种事通过路由来处理的
@@ -10,7 +15,7 @@
  > 6. 增加session和cookie的使用
  ![如图](https://github.com/jasonhua95/samll-project/blob/master/image/001.PNG)
  
-### DistributedRedis
+### DistributedSession
 > 1. 这是一个ASP.NET Core Web项目，主要展示redis的分布式缓存和负载均衡
 > 2. 项目发布两次到不同的文件夹，IIS上配置
 > 3. 通过nginx来做负载均衡，实现一个网址调用不同的服务器
