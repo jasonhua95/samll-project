@@ -50,3 +50,6 @@ RabbitMQ是实现了高级消息队列协议（AMQP）的开源消息代理软�
 .NET Core项目的工具类
 
 > 1. ReplaceRenderer.cs 替换渲染器，使用方法：await ReplaceRenderer.ParseAsync("hi @UserName,年龄： @Age，小名：@XiaoName 。", new { UserName = "测试", Age = 19, XiaoName = "小明" })
+
+### TestProject
+.NET Core测试项目和.Framework测试项目。在工作和学习上，我们经常需要创建项目，引用些其他的库，测试下自己的想法是否正确，需要捕捉一下异常、调用一下异步方法、记录一下log等等，这样的项目都是需要花费时间，为了较少花费的时间，产生了一个这样的项目。
