@@ -70,7 +70,7 @@ namespace AutoSEO
         /// 百度跳转
         /// </summary>
         /// <param name="keyWord">关键字</param>
-        public void BaiduJump(string keyWord, string www = "https://www.baidu.com/", string inputId = ".s_ipt", string btnId = ".bg.s_btn")
+        public void BaiduJump(string keyWord, string www = "https://www.baidu.com/", string inputId = "#kw", string btnId = "#su")
         {
             try
             {
@@ -182,21 +182,21 @@ namespace AutoSEO
         /// <summary>
         /// 设置值
         /// </summary>
-        /// <param name="css">id</param>
+        /// <param name="cssSelector">id</param>
         /// <param name="value">value</param>
-        public void SetValue(string css, string value)
+        public void SetValue(string cssSelector, string value)
         {
-            var element = FindElement(By.CssSelector(css));
+            var element = FindElement(By.CssSelector(cssSelector));
             if (element != null) element.SendKeys(value);
         }
 
         /// <summary>
         /// 单击
         /// </summary>
-        /// <param name="css"></param>
-        public void Click(string css)
+        /// <param name="cssSelector"></param>
+        public void Click(string cssSelector)
         {
-            var element = FindElement(By.CssSelector(css));
+            var element = FindElement(By.CssSelector(cssSelector));
             if (element != null) element.Click();
         }
 
