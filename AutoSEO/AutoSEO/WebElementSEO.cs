@@ -55,9 +55,9 @@ namespace AutoSEO
         {
             Console.WriteLine("运行开始！");
             GoToUrl("https://www.baidu.com/");
-            SetValue("kw", "测试");
+            SetValue(".s_ipt", "测试");
             Sleep();
-            Click("su");
+            Click(".bg.s_btn");
             Sleep();
             webDriver.FindElement(By.LinkText("下一页>")).Click();
             Sleep();
@@ -70,13 +70,14 @@ namespace AutoSEO
         /// 百度跳转
         /// </summary>
         /// <param name="keyWord">关键字</param>
-        public void BaiduJump(string keyWord, string www = "https://www.baidu.com/", string inputId = "kw", string btnId = "su")
+        public void BaiduJump(string keyWord, string www = "https://www.baidu.com/", string inputId = ".s_ipt", string btnId = ".bg.s_btn")
         {
             try
             {
                 Random rd = new Random();
                 //1.百度
                 GoToUrl(www);
+                var currentWindow = webDriver.CurrentWindowHandle;
                 Sleep();
 
                 //2.关键字数据
@@ -91,11 +92,21 @@ namespace AutoSEO
                 Click(btnId);
                 Sleep();
 
+                //页面跳转，新打开页面
+                var allWindow = webDriver.WindowHandles;
+                foreach (var str in allWindow)
+                {
+                    if (str != currentWindow)
+                    {
+                        webDriver.SwitchTo().Window(str);
+                    }
+                }
+
                 //4.查询网址
                 bool result = ClickByPartialText("www.apesk.com/");
                 while (!result)
                 {
-                    ClickByTest("下一页>");
+                    ClickByText("下一页>");
                     result = ClickByPartialText("www.apesk.com/");
                     if (counter >= 10)
                     {
@@ -171,21 +182,21 @@ namespace AutoSEO
         /// <summary>
         /// 设置值
         /// </summary>
-        /// <param name="id">id</param>
+        /// <param name="css">id</param>
         /// <param name="value">value</param>
-        public void SetValue(string id, string value)
+        public void SetValue(string css, string value)
         {
-            var element = FindElement(By.Id(id));
+            var element = FindElement(By.CssSelector(css));
             if (element != null) element.SendKeys(value);
         }
 
         /// <summary>
         /// 单击
         /// </summary>
-        /// <param name="id"></param>
-        public void Click(string id)
+        /// <param name="css"></param>
+        public void Click(string css)
         {
-            var element = FindElement(By.Id(id));
+            var element = FindElement(By.CssSelector(css));
             if (element != null) element.Click();
         }
 
@@ -193,10 +204,10 @@ namespace AutoSEO
         /// 单击
         /// </summary>
         /// <param name="id"></param>
-        public bool ClickByTest(string test)
+        public bool ClickByText(string text)
         {
             bool result = false;
-            var element = FindElement(By.LinkText(test));
+            var element = FindElement(By.LinkText(text));
             if (element != null)
             {
                 element.Click();
@@ -209,10 +220,10 @@ namespace AutoSEO
         /// 单击
         /// </summary>
         /// <param name="id"></param>
-        public bool ClickByPartialText(string test)
+        public bool ClickByPartialText(string text)
         {
             bool result = false;
-            var element = FindElement(By.PartialLinkText(test));
+            var element = FindElement(By.PartialLinkText(text));
             if (element != null)
             {
                 //Actions actions = new Actions(webDriver);
