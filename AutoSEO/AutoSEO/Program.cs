@@ -61,7 +61,7 @@ namespace AutoSEO
                     });
 
                     tasks.Add(task);
-                    if (tasks.Count > 5)
+                    if (tasks.Count >= 5)
                     {
                         Task.WaitAll(tasks.ToArray());
                         tasks.Clear();
