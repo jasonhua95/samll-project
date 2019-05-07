@@ -12,6 +12,9 @@ using System.Threading;
 
 namespace AutoSEO
 {
+    /// <summary>
+    /// 浏览器驱动
+    /// </summary>
     public enum DriverEnum
     {
         Chrome,
@@ -20,11 +23,29 @@ namespace AutoSEO
     }
 
     /// <summary>
+    /// 浏览器类型
+    /// </summary>
+    public enum BrowserEnum
+    {
+        baidu,
+        soguo,
+        bing,
+        B360
+    }
+
+    /// <summary>
     /// 
     /// </summary>
     public class WebElementSEO
     {
         public IWebDriver webDriver;
+        /// <summary>
+        /// 全局计数器
+        /// </summary>
+        public static int gcounter = 0;
+        /// <summary>
+        /// 单页面计数器
+        /// </summary>
         public static int counter = 0;
         private Logger logger = LogManager.GetCurrentClassLogger();
         /// <summary>
@@ -45,7 +66,7 @@ namespace AutoSEO
             webDriver.Manage().Cookies.DeleteAllCookies();
             //window.navigator.webdriver  正常浏览器这个值是false
 
-            // webDriver.Manage().Window.Maximize();
+            //webDriver.Manage().Window.Maximize();
         }
 
         /// <summary>
@@ -66,11 +87,12 @@ namespace AutoSEO
             Close();
         }
 
+
         /// <summary>
         /// 百度跳转
         /// </summary>
         /// <param name="keyWord">关键字</param>
-        public void BaiduJump(string keyWord, string www = "https://www.baidu.com/", string inputId = "#kw", string btnId = "#su")
+        public void Jump(string keyWord, BrowserEnum browserEnum = BrowserEnum.baidu, string www = "https://www.baidu.com/", string inputId = "#kw", string btnId = "#su")
         {
             try
             {
@@ -102,16 +124,19 @@ namespace AutoSEO
                 }
 
                 //4.查询网址
-                bool result = ClickByPartialText("www.apesk.com/");
-                while (!result)
-                {
-                    ClickByText("下一页>");
-                    result = ClickByPartialText("www.apesk.com/");
-                    if (counter >= 10)
-                    {
-                        logger.Error($"运行10次还没有查询到，检查监控是否已经不能用");
-                        break;//十次尝试依然不行退出
-                    }
+                switch (browserEnum) {
+                    case BrowserEnum.B360:
+                        TargetWeb("测试", "下一页");
+                        break;
+                    case BrowserEnum.bing:
+                        TargetWeb("测试", "");
+                        break;
+                    case BrowserEnum.soguo:
+                        TargetWeb("测试", "下一页");
+                        break;
+                    default:
+                        TargetWeb();
+                        break;
                 }
 
                 //5.关闭浏览器
@@ -132,6 +157,25 @@ namespace AutoSEO
             {
                 logger.Error($"其他错误：{ex.ToString()}");
                 Close();
+            }
+        }
+
+        /// <summary>
+        /// 目标网站跳转
+        /// </summary>
+        private void TargetWeb(string targetWebName = "www.apesk.com", string nextPage = "下一页>")
+        {
+            //4.查询网址
+            bool result = ClickByPartialText(targetWebName);
+            while (!result)
+            {
+                ClickByText("下一页>");
+                result = ClickByPartialText(targetWebName);
+                if (counter >= 10)
+                {
+                    logger.Error($"运行10次还没有查询到，检查监控是否已经不能用：{webDriver.Url}");
+                    break;//十次尝试依然不行退出
+                }
             }
         }
 
@@ -177,6 +221,7 @@ namespace AutoSEO
         /// </summary>
         public void Close()
         {
+            gcounter = 0;
             counter = 0;
             webDriver.Close();
             webDriver.Quit();
@@ -195,21 +240,21 @@ namespace AutoSEO
         /// <summary>
         /// 设置值
         /// </summary>
-        /// <param name="id">id</param>
+        /// <param name="cssSelector">id</param>
         /// <param name="value">value</param>
-        public void SetValue(string id, string value)
+        public void SetValue(string cssSelector, string value)
         {
-            var element = FindElement(By.CssSelector(id));
+            var element = FindElement(By.CssSelector(cssSelector));
             if (element != null) element.SendKeys(value);
         }
 
         /// <summary>
         /// 单击
         /// </summary>
-        /// <param name="id"></param>
-        public void Click(string id)
+        /// <param name="cssSelector"></param>
+        public void Click(string cssSelector)
         {
-            var element = FindElement(By.CssSelector(id));
+            var element = FindElement(By.CssSelector(cssSelector));
             if (element != null) element.Click();
         }
 
@@ -259,7 +304,8 @@ namespace AutoSEO
             }
             catch (NoSuchElementException ex)
             {
-                logger.Warn($"元素没有发现:{by.ToString()}：{ex.ToString()}");
+                logger.Warn($"元素没有发现:{by.ToString()}");
+                gcounter++;
                 counter++;
             }
 

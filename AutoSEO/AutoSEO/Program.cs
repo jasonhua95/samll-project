@@ -28,17 +28,20 @@ namespace AutoSEO
                         int random = rd.Next(15) % 3;
                         DriverEnum driver = random == 0 ? DriverEnum.Firefox : DriverEnum.Chrome;
                         WebElementSEO utils = new WebElementSEO(driver);
-                        random = rd.Next(15) % 3;
+                        random = rd.Next(15) % 4;
                         switch (random)
                         {
                             case 0:
-                                utils.BaiduJump(word, "https://www.hao123.com/", ".textInput.input-hook", ".g-cp.submitInput.button-hook");
+                                utils.Jump(word, BrowserEnum.baidu, "https://www.hao123.com/", ".textInput.input-hook", ".g-cp.submitInput.button-hook");
                                 break;
                             case 1:
-                                utils.BaiduJump(word, "https://home.firefoxchina.cn/", "#search-key", "#search-submit");
+                                utils.Jump(word, BrowserEnum.baidu, "https://home.firefoxchina.cn/", "#search-key", "#search-submit");
+                                break;
+                            case 2:
+                                utils.Jump(word, BrowserEnum.baidu, "https://www.2345.com/", ".sch_inbox > input", "#j_search_sbm");
                                 break;
                             default:
-                                utils.BaiduJump(word);
+                                utils.Jump(word);
                                 break;
                         }
 
@@ -53,9 +56,9 @@ namespace AutoSEO
                 }
 
                 Task.WaitAll(tasks.ToArray());
-                if (WebElementSEO.counter >= 10)
+                if (WebElementSEO.gcounter >= 20)
                 {
-                    logger.Error($"程序运行10次，依然不能正常访问，查看是否不起作用！这里将来发送邮件提示");
+                    logger.Error($"程序连续运行20次，依然不能正常访问，查看是否不起作用！这里将来发送邮件提示");
                     break;
                 }
                 Thread.Sleep(TimeSpan.FromSeconds(rd.Next(10)));
