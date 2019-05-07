@@ -46,7 +46,7 @@ namespace AutoSEO
         /// <summary>
         /// 单页面计数器
         /// </summary>
-        public static int counter = 0;
+        public int counter = 0;
         private Logger logger = LogManager.GetCurrentClassLogger();
         /// <summary>
         /// 休眠时间
@@ -70,13 +70,77 @@ namespace AutoSEO
         }
 
         /// <summary>
-        /// 搜索关键词=>点击网站=>停留在网站上=>关闭浏览器
+        /// 更换浏览器
         /// </summary>
-        public void Test()
+        /// <param name="driverEnum"></param>
+        public void ChangeDriver(DriverEnum driverEnum)
         {
-            Jump("国泰金业", BrowserEnum.soguo, "https://www.sogou.com", "#query", "#stb");
+            string ip = RandomIP();
+            switch (driverEnum)
+            {
+                case DriverEnum.Firefox:
+                    {
+                        //代理IP有待测试
+                        var profile = new FirefoxOptions();
+                        ////profile.AddArgument("proxy-server=202.20.16.82");
+                        profile.AddArgument($"x-forwarded-for={ip}");
+                        //profile.AddArgument($"network.proxy.http={ip}");
+                        //profile.AddArgument("network.proxy.ssl=202.20.16.85");
+                        webDriver = new FirefoxDriver(profile);
+                    }
+                    break;
+                //case DriverEnum.InternetExplorer: //IE需要管理员身份运行，IE元素单击没反应
+                //    webDriver = new InternetExplorerDriver();
+                //    break;
+                default:
+                    {
+                        var profile = new ChromeOptions();
+                        profile.AddArgument($"x-forwarded-for={ip}");
+                        //profile.AddArgument($"network.proxy.http={ip}");
+                        webDriver = new ChromeDriver(profile);
+                        break;
+                    }
+            }
         }
 
+        /// <summary>
+        /// 跳转
+        /// </summary>
+        /// <param name="word"></param>
+        public void Jump(string word)
+        {
+            int random = rd.Next(15) % 8;
+            switch (random)
+            {
+                case 0:
+                    Jump(word, BrowserEnum.baidu, "https://www.hao123.com/", ".textInput.input-hook", ".g-cp.submitInput.button-hook");
+                    break;
+                case 1:
+                    Jump(word, BrowserEnum.baidu, "https://home.firefoxchina.cn/", "#search-key", "#search-submit");
+                    break;
+                case 2:
+                    Jump(word, BrowserEnum.baidu, "https://www.2345.com/", ".sch_inbox > input", "#j_search_sbm");
+                    break;
+                //case 3:
+                //    Jump(word, BrowserEnum.B360, "https://hao.360.com/", "#search-kw", "#search-btn");
+                //    break;
+                //case 4:
+                //    Jump(word, BrowserEnum.B360, "https://www.so.com/", "#input", "#search-button");
+                //    break;
+                //case 5:
+                //    Jump(word, BrowserEnum.soguo, "https://www.sogou.com/", "#query", "#stb");
+                //    break;
+                //case 6:
+                //    Jump(word, BrowserEnum.soguo, "https://123.sogou.com/", "#engineKeyWord", "#engineBtn");
+                //    break;
+                //case 7:
+                //    Jump(word, BrowserEnum.bing, "https://cn.bing.com/", "#sb_form_q", "#sb_form_go");
+                //    break;
+                default:
+                    Jump(word);
+                    break;
+            }
+        }
 
         /// <summary>
         /// 百度跳转
@@ -86,7 +150,6 @@ namespace AutoSEO
         {
             try
             {
-                Random rd = new Random();
                 //1.百度
                 GoToUrl(www);
                 var currentWindow = webDriver.CurrentWindowHandle;
@@ -100,7 +163,7 @@ namespace AutoSEO
                 Sleep();
 
                 //3.搜索
-                Click(btnId);
+                ClickByCss(btnId);
                 Sleep();
 
                 //页面跳转
@@ -120,7 +183,7 @@ namespace AutoSEO
                         TargetSoWeb();
                         break;
                     case BrowserEnum.bing:
-                        TargetWeb("香港国泰金业有限公司官网", "");
+                        TargetBingWeb();
                         break;
                     case BrowserEnum.soguo:
                         TargetSoWeb();
@@ -176,11 +239,11 @@ namespace AutoSEO
         private void TargetSoWeb(string targetWebName = "www.guotaigold.hk", string nextPage = "下一页")
         {
             //4.查询网址
-            bool result = ClickSoByText(targetWebName);
+            bool result = ClickByXpath($"//div[@id='main']//a[contains(@href,'{targetWebName}')]/../../h3/a");
             while (!result)
             {
                 ClickByText(nextPage);
-                result = ClickSoByText(targetWebName);
+                result = ClickByXpath($"//div[@id='main']//a[contains(@href,'{targetWebName}')]/../../h3/a");
                 if (counter >= 10)
                 {
                     logger.Error($"运行10次还没有查询到，检查监控是否已经不能用：{webDriver.Url}");
@@ -190,56 +253,46 @@ namespace AutoSEO
         }
 
         /// <summary>
-        /// 360单击/搜狗单击
+        /// 360或者搜狗目标网站跳转
         /// </summary>
-        /// <param name="id"></param>
-        public bool ClickSoByText(string text)
+        private void TargetBingWeb(string targetWebName = "www.guotaigold.hk")
         {
-            bool result = false;
-            var element = FindElement(By.XPath($"//div[@id='main']//a[contains(@href,'{text}')]/../../h3/a"));
-            if (element != null)
+            //4.查询网址
+            bool result = ClickByXpath($"//a[contains(@href,'{targetWebName}')]");
+            while (!result)
             {
-                element.Click();
-                result = true;
+                ClickByXpath($"//a[contains(@class,'sb_pagN')]");
+                result = ClickByXpath($"//a[contains(@href,'{targetWebName}')]");
+                if (counter >= 10)
+                {
+                    logger.Error($"运行10次还没有查询到，检查监控是否已经不能用：{webDriver.Url}");
+                    break;//十次尝试依然不行退出
+                }
             }
-            return result;
         }
 
         /// <summary>
-        /// 更换浏览器
+        /// 随机IP地址
         /// </summary>
-        /// <param name="driverEnum"></param>
-        public void ChangeDriver(DriverEnum driverEnum)
+        /// <returns></returns>
+        private string RandomIP()
         {
-            switch (driverEnum)
+            string ip = "";
+            int start = rd.Next(3) % 3;
+            switch (start)
             {
-                case DriverEnum.Firefox:
-                    webDriver = new FirefoxDriver();
-
-                    //代理IP有待测试
-                    //var profile = new FirefoxOptions();
-                    //profile.SetPreference("X-Forwarded-For", "113.89.96.200");//X-Real-IP,HTTP_X_FORWARDED_FOR,Accept-Language
-                    //profile.SetPreference("network.proxy.http", "113.89.96.200");
-                    //profile.SetPreference("network.proxy.ssl", "113.89.96.200");
-                    //////profile.SetPreference("Accept-Language", "113.89.96.200");//X-Real-IP,HTTP_X_FORWARDED_FOR,Accept-Language
-                    ////profile.AddArgument("proxy-server=202.20.16.82");
-                    ////profile.AddArgument("x-forwarded-for=202.20.16.83");
-                    ////profile.AddArgument("network.proxy.http=202.20.16.84");
-                    ////profile.AddArgument("network.proxy.ssl=202.20.16.85");
-                    //webDriver = new FirefoxDriver(profile);
+                case 0:
+                    ip = $"113.{rd.Next(7)}.{rd.Next(255)}.{rd.Next(255)}"; //113.0.0.0 - 113.7.255.255   联通
                     break;
-                //case DriverEnum.InternetExplorer: //IE需要管理员身份运行，IE元素单击没反应
-                //    webDriver = new InternetExplorerDriver();
-                //    break;
+                case 1:
+                    ip = $"112.{rd.Next(63)}.{rd.Next(255)}.{rd.Next(255)}"; //112.0.0.0 - 112.63.255.255  移动
+                    break;
                 default:
-                    webDriver = new ChromeDriver();
-
-                    //var profile = new ChromeOptions();
-                    ////profile.AddArgument("proxy-server=202.20.16.82");
-                    //profile.AddArgument("network.proxy.http=202.20.16.84");
-                    //webDriver = new ChromeDriver(profile);
+                    ip = $"111.{rd.Next(63)}.{rd.Next(255)}.{rd.Next(255)}"; //111.0.0.0 - 111.63.255.255  移动
                     break;
             }
+
+            return ip;
         }
 
         /// <summary>
@@ -278,7 +331,7 @@ namespace AutoSEO
         /// 单击
         /// </summary>
         /// <param name="cssSelector"></param>
-        public void Click(string cssSelector)
+        public void ClickByCss(string cssSelector)
         {
             var element = FindElement(By.CssSelector(cssSelector));
             if (element != null) element.Click();
@@ -317,6 +370,22 @@ namespace AutoSEO
         }
 
         /// <summary>
+        /// 根据xpath点击
+        /// </summary>
+        /// <param name="id"></param>
+        public bool ClickByXpath(string path)
+        {
+            bool result = false;
+            var element = FindElement(By.XPath(path));
+            if (element != null)
+            {
+                element.Click();
+                result = true;
+            }
+            return result;
+        }
+
+        /// <summary>
         /// 发现元素
         /// </summary>
         /// <param name="by"></param>
@@ -344,6 +413,31 @@ namespace AutoSEO
         private void Sleep()
         {
             Thread.Sleep(TimeSpan.FromSeconds(rd.Next(10)));
+        }
+
+        /// <summary>
+        /// 搜索关键词=>点击网站=>停留在网站上=>关闭浏览器
+        /// </summary>
+        public void Test()
+        {
+            string word = "国泰金业";
+            //Jump(word, BrowserEnum.baidu, "https://www.hao123.com/", ".textInput.input-hook", ".g-cp.submitInput.button-hook");
+
+            //Jump(word, BrowserEnum.baidu, "https://home.firefoxchina.cn/", "#search-key", "#search-submit");
+
+            //Jump(word, BrowserEnum.baidu, "https://www.2345.com/", ".sch_inbox > input", "#j_search_sbm");
+
+            //Jump(word, BrowserEnum.B360, "https://hao.360.com/", "#search-kw", "#search-btn");
+
+            //Jump(word, BrowserEnum.B360, "https://www.so.com/", "#input", "#search-button");
+
+            //Jump(word, BrowserEnum.soguo, "https://www.sogou.com/", "#query", "#stb");
+
+            //Jump(word, BrowserEnum.soguo, "https://123.sogou.com/", "#engineKeyWord", "#engineBtn");
+
+            //Jump(word, BrowserEnum.bing, "https://cn.bing.com/", "#sb_form_q", "#sb_form_go");
+
+            Jump(word);
         }
     }
 }
