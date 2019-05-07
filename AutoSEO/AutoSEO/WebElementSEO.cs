@@ -2,12 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.IE;
-using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Remote;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 
 namespace AutoSEO
@@ -18,8 +13,7 @@ namespace AutoSEO
     public enum DriverEnum
     {
         Chrome,
-        Firefox,
-        InternetExplorer
+        Firefox
     }
 
     /// <summary>
@@ -89,9 +83,6 @@ namespace AutoSEO
                         webDriver = new FirefoxDriver(profile);
                     }
                     break;
-                //case DriverEnum.InternetExplorer: //IE需要管理员身份运行，IE元素单击没反应
-                //    webDriver = new InternetExplorerDriver();
-                //    break;
                 default:
                     {
                         var profile = new ChromeOptions();
