@@ -114,12 +114,13 @@ namespace AutoSEO
                 }
 
                 //4.查询网址
-                switch (browserEnum) {
+                switch (browserEnum)
+                {
                     case BrowserEnum.B360:
                         TargetSoWeb();
                         break;
                     case BrowserEnum.bing:
-                        TargetWeb("香港国泰金业有限公司官网","");
+                        TargetWeb("香港国泰金业有限公司官网", "");
                         break;
                     case BrowserEnum.soguo:
                         TargetSoWeb();
