@@ -11,6 +11,7 @@ namespace AutoSEO
 {
     class Program
     {
+
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         static void Main(string[] args)
@@ -28,7 +29,7 @@ namespace AutoSEO
                         int random = rd.Next(15) % 3;
                         DriverEnum driver = random == 0 ? DriverEnum.Firefox : DriverEnum.Chrome;
                         WebElementSEO utils = new WebElementSEO(driver);
-                        random = rd.Next(15) % 4;
+                        random = rd.Next(15) % 5;
                         switch (random)
                         {
                             case 0:
@@ -40,11 +41,23 @@ namespace AutoSEO
                             case 2:
                                 utils.Jump(word, BrowserEnum.baidu, "https://www.2345.com/", ".sch_inbox > input", "#j_search_sbm");
                                 break;
+                            //case 3:
+                            //    utils.Jump(word, BrowserEnum.B360, "https://hao.360.com/", "#search-kw", "#search-btn");
+                            //    break;
+                            //case 4:
+                            //    utils.Jump(word, BrowserEnum.B360, "https://www.so.com/", "#input", "#search-button");
+                            //    break;
+                            //case 5:
+                            //    utils.Jump(word, BrowserEnum.soguo, "https://www.sogou.com/", "#query", "#stb");
+                            //    break;
+                            //case 6:
+                            //    utils.Jump(word, BrowserEnum.soguo, "https://123.sogou.com/", "#engineKeyWord", "#engineBtn");
+                            //    break;
+
                             default:
                                 utils.Jump(word);
                                 break;
                         }
-
                     });
 
                     tasks.Add(task);

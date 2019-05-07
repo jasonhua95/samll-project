@@ -74,17 +74,7 @@ namespace AutoSEO
         /// </summary>
         public void Test()
         {
-            Console.WriteLine("运行开始！");
-            GoToUrl("https://www.baidu.com/");
-            SetValue("#kw", "测试");
-            Sleep();
-            Click("#su");
-            Sleep();
-            webDriver.FindElement(By.LinkText("下一页>")).Click();
-            Sleep();
-            webDriver.FindElement(By.PartialLinkText("www.apesk.com")).Click();
-            Sleep();
-            Close();
+            Jump("国泰金业", BrowserEnum.soguo, "https://www.sogou.com", "#query", "#stb");
         }
 
 
@@ -126,13 +116,13 @@ namespace AutoSEO
                 //4.查询网址
                 switch (browserEnum) {
                     case BrowserEnum.B360:
-                        TargetWeb("测试", "下一页");
+                        TargetSoWeb();
                         break;
                     case BrowserEnum.bing:
-                        TargetWeb("测试", "");
+                        TargetWeb("香港国泰金业有限公司官网","");
                         break;
                     case BrowserEnum.soguo:
-                        TargetWeb("测试", "下一页");
+                        TargetSoWeb();
                         break;
                     default:
                         TargetWeb();
@@ -163,13 +153,13 @@ namespace AutoSEO
         /// <summary>
         /// 目标网站跳转
         /// </summary>
-        private void TargetWeb(string targetWebName = "www.apesk.com", string nextPage = "下一页>")
+        private void TargetWeb(string targetWebName = "https://www.guotaigold.hk/", string nextPage = "下一页>")
         {
             //4.查询网址
             bool result = ClickByPartialText(targetWebName);
             while (!result)
             {
-                ClickByText("下一页>");
+                ClickByText(nextPage);
                 result = ClickByPartialText(targetWebName);
                 if (counter >= 10)
                 {
@@ -177,6 +167,41 @@ namespace AutoSEO
                     break;//十次尝试依然不行退出
                 }
             }
+        }
+
+        /// <summary>
+        /// 360或者搜狗目标网站跳转
+        /// </summary>
+        private void TargetSoWeb(string targetWebName = "www.guotaigold.hk", string nextPage = "下一页")
+        {
+            //4.查询网址
+            bool result = ClickSoByText(targetWebName);
+            while (!result)
+            {
+                ClickByText(nextPage);
+                result = ClickSoByText(targetWebName);
+                if (counter >= 10)
+                {
+                    logger.Error($"运行10次还没有查询到，检查监控是否已经不能用：{webDriver.Url}");
+                    break;//十次尝试依然不行退出
+                }
+            }
+        }
+
+        /// <summary>
+        /// 360单击/搜狗单击
+        /// </summary>
+        /// <param name="id"></param>
+        public bool ClickSoByText(string text)
+        {
+            bool result = false;
+            var element = FindElement(By.XPath($"//div[@id='main']//a[contains(@href,'{text}')]/../../h3/a"));
+            if (element != null)
+            {
+                element.Click();
+                result = true;
+            }
+            return result;
         }
 
         /// <summary>
