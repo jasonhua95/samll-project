@@ -25,7 +25,7 @@ namespace AutoSEO
     public class WebElementSEO
     {
         public IWebDriver webDriver;
-        public int counter = 0;
+        public static int counter = 0;
         private Logger logger = LogManager.GetCurrentClassLogger();
         /// <summary>
         /// 休眠时间
@@ -45,7 +45,7 @@ namespace AutoSEO
             webDriver.Manage().Cookies.DeleteAllCookies();
             //window.navigator.webdriver  正常浏览器这个值是false
 
-            webDriver.Manage().Window.Maximize();
+            // webDriver.Manage().Window.Maximize();
         }
 
         /// <summary>
@@ -55,9 +55,9 @@ namespace AutoSEO
         {
             Console.WriteLine("运行开始！");
             GoToUrl("https://www.baidu.com/");
-            SetValue(".s_ipt", "测试");
+            SetValue("#kw", "测试");
             Sleep();
-            Click(".bg.s_btn");
+            Click("#su");
             Sleep();
             webDriver.FindElement(By.LinkText("下一页>")).Click();
             Sleep();
@@ -83,7 +83,6 @@ namespace AutoSEO
                 //2.关键字数据
                 foreach (var k in keyWord)
                 {
-                    //Thread.Sleep(TimeSpan.FromMilliseconds(rd.Next(10)));
                     SetValue(inputId, k.ToString());
                 }
                 Sleep();
@@ -92,7 +91,7 @@ namespace AutoSEO
                 Click(btnId);
                 Sleep();
 
-                //页面跳转，新打开页面
+                //页面跳转
                 var allWindow = webDriver.WindowHandles;
                 foreach (var str in allWindow)
                 {
@@ -122,14 +121,17 @@ namespace AutoSEO
             catch (NoSuchElementException ex)
             {
                 logger.Warn($"元素没有发现：{ex.ToString()}");
+                Close();
             }
             catch (NoSuchWindowException ex)
             {
                 logger.Warn($"浏览器已经关闭：{ex.ToString()}");
+                Close(); ;
             }
             catch (Exception ex)
             {
                 logger.Error($"其他错误：{ex.ToString()}");
+                Close();
             }
         }
 
@@ -144,10 +146,16 @@ namespace AutoSEO
                 case DriverEnum.Firefox:
                     webDriver = new FirefoxDriver();
 
+                    //代理IP有待测试
                     //var profile = new FirefoxOptions();
                     //profile.SetPreference("X-Forwarded-For", "113.89.96.200");//X-Real-IP,HTTP_X_FORWARDED_FOR,Accept-Language
-                    //profile.SetPreference("Accept-Language", "113.89.96.200");//X-Real-IP,HTTP_X_FORWARDED_FOR,Accept-Language
-
+                    //profile.SetPreference("network.proxy.http", "113.89.96.200");
+                    //profile.SetPreference("network.proxy.ssl", "113.89.96.200");
+                    //////profile.SetPreference("Accept-Language", "113.89.96.200");//X-Real-IP,HTTP_X_FORWARDED_FOR,Accept-Language
+                    ////profile.AddArgument("proxy-server=202.20.16.82");
+                    ////profile.AddArgument("x-forwarded-for=202.20.16.83");
+                    ////profile.AddArgument("network.proxy.http=202.20.16.84");
+                    ////profile.AddArgument("network.proxy.ssl=202.20.16.85");
                     //webDriver = new FirefoxDriver(profile);
                     break;
                 //case DriverEnum.InternetExplorer: //IE需要管理员身份运行，IE元素单击没反应
@@ -155,6 +163,11 @@ namespace AutoSEO
                 //    break;
                 default:
                     webDriver = new ChromeDriver();
+
+                    //var profile = new ChromeOptions();
+                    ////profile.AddArgument("proxy-server=202.20.16.82");
+                    //profile.AddArgument("network.proxy.http=202.20.16.84");
+                    //webDriver = new ChromeDriver(profile);
                     break;
             }
         }
@@ -182,21 +195,21 @@ namespace AutoSEO
         /// <summary>
         /// 设置值
         /// </summary>
-        /// <param name="cssSelector">id</param>
+        /// <param name="id">id</param>
         /// <param name="value">value</param>
-        public void SetValue(string cssSelector, string value)
+        public void SetValue(string id, string value)
         {
-            var element = FindElement(By.CssSelector(cssSelector));
+            var element = FindElement(By.CssSelector(id));
             if (element != null) element.SendKeys(value);
         }
 
         /// <summary>
         /// 单击
         /// </summary>
-        /// <param name="cssSelector"></param>
-        public void Click(string cssSelector)
+        /// <param name="id"></param>
+        public void Click(string id)
         {
-            var element = FindElement(By.CssSelector(cssSelector));
+            var element = FindElement(By.CssSelector(id));
             if (element != null) element.Click();
         }
 
@@ -226,8 +239,6 @@ namespace AutoSEO
             var element = FindElement(By.PartialLinkText(text));
             if (element != null)
             {
-                //Actions actions = new Actions(webDriver);
-                //actions.MoveToElement(element).Click().Perform();
                 element.Click();
                 result = true;
             }
@@ -248,7 +259,7 @@ namespace AutoSEO
             }
             catch (NoSuchElementException ex)
             {
-                logger.Warn($"元素没有发现：{ex.ToString()}");
+                logger.Warn($"元素没有发现:{by.ToString()}：{ex.ToString()}");
                 counter++;
             }
 
@@ -256,7 +267,7 @@ namespace AutoSEO
         }
 
         /// <summary>
-        /// 随机休眠时间
+        /// 随机休眠时间（单位：秒）
         /// </summary>
         private void Sleep()
         {
