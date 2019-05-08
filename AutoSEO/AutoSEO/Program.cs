@@ -24,10 +24,14 @@ namespace AutoSEO
                 {
                     var task = Task.Run(() =>
                     {
-                        int random = rd.Next(15) % 3;
-                        DriverEnum driver = random == 0 ? DriverEnum.Firefox : DriverEnum.Chrome;
-                        WebElementSEO utils = new WebElementSEO(driver);
-                        utils.Jump(word);
+                        try {
+                            int random = rd.Next(15) % 3;
+                            DriverEnum driver = random == 0 ? DriverEnum.Firefox : DriverEnum.Chrome;
+                            WebElementSEO utils = new WebElementSEO(driver);
+                            utils.Jump(word);
+                        } catch (Exception ex) {
+                            logger.Error($"Main中程序运行错误：{ex.ToString()}");
+                        }
                     });
 
                     tasks.Add(task);
