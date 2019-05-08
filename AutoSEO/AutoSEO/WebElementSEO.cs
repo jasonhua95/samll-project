@@ -171,7 +171,7 @@ namespace AutoSEO
                 switch (browserEnum)
                 {
                     case BrowserEnum.B360:
-                        TargetSoWeb();
+                        Target360Web();
                         break;
                     case BrowserEnum.bing:
                         TargetBingWeb();
@@ -180,7 +180,7 @@ namespace AutoSEO
                         TargetSoWeb();
                         break;
                     default:
-                        TargetWeb();
+                        TargetBaiduWeb();
                         break;
                 }
 
@@ -208,13 +208,13 @@ namespace AutoSEO
         /// <summary>
         /// 目标网站跳转
         /// </summary>
-        private void TargetWeb(string targetWebName = "https://www.guotaigold.hk/", string nextPage = "下一页>")
+        private void TargetBaiduWeb(string targetWebName = "www.guotaigold.hk")
         {
             //4.查询网址
             bool result = ClickByPartialText(targetWebName);
             while (!result)
             {
-                ClickByText(nextPage);
+                ClickByXpath("//*[@id='page']/a[contains(@class,'n')][last()]");
                 result = ClickByPartialText(targetWebName);
                 if (counter >= 10)
                 {
@@ -225,15 +225,15 @@ namespace AutoSEO
         }
 
         /// <summary>
-        /// 360或者搜狗目标网站跳转
+        /// 搜狗目标网站跳转
         /// </summary>
-        private void TargetSoWeb(string targetWebName = "www.guotaigold.hk", string nextPage = "下一页")
+        private void TargetSoWeb(string targetWebName = "www.guotaigold.hk")
         {
             //4.查询网址
             bool result = ClickByXpath($"//div[@id='main']//a[contains(@href,'{targetWebName}')]/../../h3/a");
             while (!result)
             {
-                ClickByText(nextPage);
+                ClickByXpath("//*[@id='sogou_next']");
                 result = ClickByXpath($"//div[@id='main']//a[contains(@href,'{targetWebName}')]/../../h3/a");
                 if (counter >= 10)
                 {
@@ -244,7 +244,27 @@ namespace AutoSEO
         }
 
         /// <summary>
-        /// 360或者搜狗目标网站跳转
+        /// 360目标网址跳转
+        /// </summary>
+        /// <param name="targetWebName"></param>
+        private void Target360Web(string targetWebName = "www.guotaigold.hk")
+        {
+            //4.查询网址
+            bool result = ClickByXpath($"//div[@id='main']//a[contains(@href,'{targetWebName}')]/../../h3/a");
+            while (!result)
+            {
+                ClickByXpath("//*[@id='snext']");
+                result = ClickByXpath($"//div[@id='main']//a[contains(@href,'{targetWebName}')]/../../h3/a");
+                if (counter >= 10)
+                {
+                    logger.Error($"运行10次还没有查询到，检查监控是否已经不能用：{webDriver.Url}");
+                    break;//十次尝试依然不行退出
+                }
+            }
+        }
+
+        /// <summary>
+        /// bing目标网站跳转
         /// </summary>
         private void TargetBingWeb(string targetWebName = "www.guotaigold.hk")
         {
