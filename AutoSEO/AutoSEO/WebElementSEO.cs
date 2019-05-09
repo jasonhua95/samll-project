@@ -423,7 +423,7 @@ namespace AutoSEO
         /// </summary>
         private void Sleep()
         {
-            Thread.Sleep(TimeSpan.FromSeconds(rd.Next(10)));
+            Thread.Sleep(TimeSpan.FromSeconds(rd.Next(2, 10)));
         }
 
         /// <summary>
