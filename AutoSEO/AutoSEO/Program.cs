@@ -42,12 +42,12 @@ namespace AutoSEO
                     tasks.Add(task);
                     if (tasks.Count >= 5)
                     {
+                        logger.Info($"运行次数：{count}");
                         Task.WaitAll(tasks.ToArray());
                         tasks.Clear();
                     }
                     count++;
                 }
-                logger.Info($"运行次数：{count * length}");
 
                 Task.WaitAll(tasks.ToArray());
                 if (WebElementSEO.gcounter >= 20)
