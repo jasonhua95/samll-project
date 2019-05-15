@@ -3,6 +3,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace AutoSEO
@@ -47,6 +49,8 @@ namespace AutoSEO
         /// </summary>
         private Random rd = new Random();
 
+        private List<string> oldWindowHandles = new List<string>();
+
         /// <summary>
         /// 初始化
         /// </summary>
@@ -77,7 +81,7 @@ namespace AutoSEO
                         //代理IP有待测试
                         var profile = new FirefoxOptions();
                         ////profile.AddArgument("proxy-server=202.20.16.82");
-                        profile.AddArgument($"x-forwarded-for={ip}");
+                        // profile.AddArgument($"x-forwarded-for={ip}");
                         //profile.AddArgument($"network.proxy.http={ip}");
                         //profile.AddArgument("network.proxy.ssl=202.20.16.85");
                         webDriver = new FirefoxDriver(profile);
@@ -86,7 +90,7 @@ namespace AutoSEO
                 default:
                     {
                         var profile = new ChromeOptions();
-                        profile.AddArgument($"x-forwarded-for={ip}");
+                        // profile.AddArgument($"x-forwarded-for={ip}");
                         //profile.AddArgument($"network.proxy.http={ip}");
                         webDriver = new ChromeDriver(profile);
                         break;
@@ -109,9 +113,9 @@ namespace AutoSEO
                 case 1:
                     Jump(word, BrowserEnum.baidu, "https://home.firefoxchina.cn/", "#search-key", "#search-submit");
                     break;
-                case 2:
-                    Jump(word, BrowserEnum.baidu, "https://www.2345.com/", ".sch_inbox > input", "#j_search_sbm");
-                    break;
+                //case 2:
+                //    Jump(word, BrowserEnum.baidu, "https://www.2345.com/", ".sch_inbox > input", "#j_search_sbm");
+                //    break;
                 //case 3:
                 //    Jump(word, BrowserEnum.B360, "https://hao.360.com/", "#search-kw", "#search-btn");
                 //    break;
@@ -128,7 +132,7 @@ namespace AutoSEO
                 //    Jump(word, BrowserEnum.bing, "https://cn.bing.com/", "#sb_form_q", "#sb_form_go");
                 //    break;
                 default:
-                    Jump(word);
+                    Jump(word, BrowserEnum.baidu);
                     break;
             }
         }
@@ -143,7 +147,7 @@ namespace AutoSEO
             {
                 //1.百度
                 GoToUrl(www);
-                var currentWindow = webDriver.CurrentWindowHandle;
+                oldWindowHandles.Add(webDriver.CurrentWindowHandle);
                 Sleep();
 
                 //2.关键字数据
@@ -158,14 +162,7 @@ namespace AutoSEO
                 Sleep();
 
                 //页面跳转
-                var allWindow = webDriver.WindowHandles;
-                foreach (var str in allWindow)
-                {
-                    if (str != currentWindow)
-                    {
-                        webDriver.SwitchTo().Window(str);
-                    }
-                }
+                SkipPage();
 
                 //4.查询网址
                 switch (browserEnum)
@@ -186,6 +183,8 @@ namespace AutoSEO
 
                 //5.关闭浏览器
                 Sleep(); ;//:TODO测试的时候查看效果，正式删除
+
+                RandomClickGT();
                 Close();
             }
             catch (NoSuchElementException ex)
@@ -203,6 +202,21 @@ namespace AutoSEO
                 logger.Error($"其他错误：{ex.ToString()}");
                 Close();
             }
+        }
+
+        /// <summary>
+        /// 页面跳转
+        /// </summary>
+        private void SkipPage() {
+            var allWindow = webDriver.WindowHandles;
+            foreach (var str in allWindow)
+            {
+                if (!oldWindowHandles.Contains(str))
+                {
+                    webDriver.SwitchTo().Window(str);
+                }
+            }
+            oldWindowHandles.Add(webDriver.CurrentWindowHandle);
         }
 
         /// <summary>
@@ -315,7 +329,7 @@ namespace AutoSEO
             counter = 0;
             webDriver.Close();
             webDriver.Quit();
-            Thread.Sleep(TimeSpan.FromSeconds(2));
+            Sleep();
         }
 
         /// <summary>
@@ -423,7 +437,7 @@ namespace AutoSEO
         /// </summary>
         private void Sleep()
         {
-            Thread.Sleep(TimeSpan.FromSeconds(rd.Next(2, 10)));
+            Thread.Sleep(TimeSpan.FromSeconds(rd.Next(3,8)));
         }
 
         /// <summary>
@@ -449,6 +463,46 @@ namespace AutoSEO
             //Jump(word, BrowserEnum.bing, "https://cn.bing.com/", "#sb_form_q", "#sb_form_go");
 
             Jump(word);
+        }
+
+        private void RandomClickGT()
+        {
+            SkipPage();
+            Sleep();
+            //1.关闭弹框
+            ClickByXpath("//*[@class='closecross2']");
+            //2.点击新闻，进入新闻列表
+            bool clickNews = false;
+            int j = 0;
+            while (!clickNews)
+            {
+                ClickByXpath("//*[@id='maincontent']/div[2]/div/ul/li[3]/div[1]");
+                clickNews = ClickByXpath("//*[@id='maincontent']/div[2]/div/ul/li[3]/div[2]/span[1]/a");
+                Sleep();
+                j++;
+                if (j > 10)
+                {
+                    logger.Warn($"网站点击10次依然没有找到新闻");
+                    break;//运行10次退出
+                }
+            }
+
+            if (clickNews) {
+                //3.查看新闻
+                ClickByXpath($"//*[@id='maincontent']/div[3]/div/div[3]/ul/li[{rd.Next(1, 20)}]/a");
+                Thread.Sleep(TimeSpan.FromSeconds(rd.Next(10, 20)));
+                //4.循环查看新闻5次
+                for (int i = 0; i < 5; i++)
+                {
+                    ClickByXpath("//*[@id='maincontent']/div[3]/div/div[3]/div/span[1]/a");
+                    Sleep();
+                    ClickByXpath($"//*[@id='maincontent']/div[3]/div/div[3]/ul/li[{rd.Next(1, 20)}]/a");
+                    Thread.Sleep(TimeSpan.FromSeconds(rd.Next(10, 20)));
+                }
+            }
+
+
+            Thread.Sleep(TimeSpan.FromMinutes(rd.Next(5, 10)));
         }
     }
 }

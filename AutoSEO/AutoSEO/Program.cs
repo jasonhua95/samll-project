@@ -15,15 +15,13 @@ namespace AutoSEO
         static void Main(string[] args)
         {
             string[] words = ConfigurationManager.AppSettings["words"].Split(',');
-            int length = words.Length - 1;
             Random rd = new Random();
             while (true)
             {
 
                 List<Task> tasks = new List<Task>();
-                for (int i = 0; i <= length; i++)
+                foreach (var word in words)
                 {
-                    string word = words[rd.Next(length)];
                     var task = Task.Run(() =>
                     {
                         try
@@ -40,11 +38,12 @@ namespace AutoSEO
                     });
 
                     tasks.Add(task);
-                    if (tasks.Count >= 5)
+                    if (tasks.Count >= 3)
                     {
-                        logger.Info($"运行次数：{count}");
+                       
                         Task.WaitAll(tasks.ToArray());
                         tasks.Clear();
+                        logger.Info($"运行次数：{count}");
                     }
                     count++;
                 }
@@ -55,11 +54,16 @@ namespace AutoSEO
                     logger.Error($"程序连续运行20次，依然不能正常访问，查看是否不起作用！这里将来发送邮件提示");
                     break;
                 }
-                Thread.Sleep(TimeSpan.FromMinutes(rd.Next(10, 20)));
+                Thread.Sleep(TimeSpan.FromMinutes(rd.Next(5, 10)));
             }
 
-            //WebElementSEO utils = new WebElementSEO(DriverEnum.Chrome);
-            //utils.Test();
+            //while (true)
+            //{
+            //    WebElementSEO utils = new WebElementSEO(DriverEnum.Chrome);
+            //    utils.Test();
+            //    //Thread.Sleep(TimeSpan.FromMinutes(rd.Next(5, 20)));
+            //}
+
 
             Console.WriteLine("运行结束！");
         }
