@@ -404,7 +404,9 @@ namespace AutoSEO
             var element = FindElement(By.XPath(path));
             if (element != null)
             {
-                element.Click();
+                if (element.Displayed) {
+                    element.Click();
+                }
                 result = true;
             }
             return result;
