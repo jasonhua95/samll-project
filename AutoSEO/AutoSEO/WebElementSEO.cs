@@ -207,7 +207,8 @@ namespace AutoSEO
         /// <summary>
         /// 页面跳转
         /// </summary>
-        private void SkipPage() {
+        private void SkipPage()
+        {
             var allWindow = webDriver.WindowHandles;
             foreach (var str in allWindow)
             {
@@ -404,7 +405,8 @@ namespace AutoSEO
             var element = FindElement(By.XPath(path));
             if (element != null)
             {
-                if (element.Displayed) {
+                if (element.Displayed)
+                {
                     element.Click();
                 }
                 result = true;
@@ -439,7 +441,7 @@ namespace AutoSEO
         /// </summary>
         private void Sleep()
         {
-            Thread.Sleep(TimeSpan.FromSeconds(rd.Next(3,8)));
+            Thread.Sleep(TimeSpan.FromSeconds(rd.Next(3, 8)));
         }
 
         /// <summary>
@@ -478,8 +480,8 @@ namespace AutoSEO
             int j = 0;
             while (!clickNews)
             {
-                ClickByXpath("//*[@id='maincontent']/div[2]/div/ul/li[3]/div[1]");
-                clickNews = ClickByXpath("//*[@id='maincontent']/div[2]/div/ul/li[3]/div[2]/span[1]/a");
+                ClickByXpath("//*[@class='navi']/*[@class='container']//li[3]/div[@class='theme']");
+                clickNews = ClickByXpath("//*[@class='subtheme']/span/a[@href='/News/InstantNews']");
                 Sleep();
                 j++;
                 if (j > 10)
@@ -489,16 +491,17 @@ namespace AutoSEO
                 }
             }
 
-            if (clickNews) {
+            if (clickNews)
+            {
                 //3.查看新闻
-                ClickByXpath($"//*[@id='maincontent']/div[3]/div/div[3]/ul/li[{rd.Next(1, 20)}]/a");
+                ClickByXpath($"//*[@class='news_list'][{rd.Next(1, 20)}]/a");
                 Thread.Sleep(TimeSpan.FromSeconds(rd.Next(10, 20)));
                 //4.循环查看新闻5次
                 for (int i = 0; i < 5; i++)
                 {
-                    ClickByXpath("//*[@id='maincontent']/div[3]/div/div[3]/div/span[1]/a");
+                    ClickByXpath("//*[@class='breadcrumbnavigation']/span[1]/a");
                     Sleep();
-                    ClickByXpath($"//*[@id='maincontent']/div[3]/div/div[3]/ul/li[{rd.Next(1, 20)}]/a");
+                    ClickByXpath($"//*[@class='news_list'][{rd.Next(1, 20)}]/a");
                     Thread.Sleep(TimeSpan.FromSeconds(rd.Next(10, 20)));
                 }
             }
