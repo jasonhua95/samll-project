@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using Newtonsoft.Json;
+using NLog;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
@@ -117,6 +118,7 @@ namespace AutoSEO
             var element = FindElement(By.CssSelector(cssSelector));
             if (element != null)
             {
+                logger.Info($"点击的文本：{element.Text}，href:{element.GetAttribute("href")}");
                 element.Click();
                 result = true;
             }
@@ -133,6 +135,7 @@ namespace AutoSEO
             var element = FindElement(By.LinkText(text));
             if (element != null)
             {
+                logger.Info($"点击的文本：{element.Text}，href:{element.GetAttribute("href")}");
                 element.Click();
                 result = true;
             }
@@ -149,6 +152,7 @@ namespace AutoSEO
             var element = FindElement(By.PartialLinkText(text));
             if (element != null)
             {
+                logger.Info($"点击的文本：{element.Text}，href:{element.GetAttribute("href")}");
                 element.Click();
                 result = true;
             }
@@ -165,6 +169,7 @@ namespace AutoSEO
             var element = FindElement(By.XPath(path));
             if (element != null)
             {
+                logger.Info($"点击的文本：{element.Text}，href:{element.GetAttribute("href")}");
                 element.Click();
                 result = true;
             }
@@ -182,6 +187,7 @@ namespace AutoSEO
             var element = FindElement(By.XPath(path));
             if (element != null && element.Displayed)
             {
+                logger.Info($"点击的文本：{element.Text}，href:{element.GetAttribute("href")}");
                 element.Click();
                 result = true;
             }
@@ -202,12 +208,12 @@ namespace AutoSEO
             }
             catch (NoSuchElementException ex)
             {
-                logger.Warn($"元素没有发现:{by.ToString()},ex:{ex.ToString()}");
+                logger.Warn($"元素没有发现:{by.ToString()}");
                 counter++;
             }
             catch (Exception ex)
             {
-                logger.Warn($"其他异常错误:{by.ToString()}，ex:{ex.ToString()}");
+                logger.Warn($"其他异常错误:{by.ToString()}");
                 counter++;
             }
 
