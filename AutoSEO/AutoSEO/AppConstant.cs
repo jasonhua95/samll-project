@@ -1,8 +1,11 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AutoSEO
@@ -39,21 +42,52 @@ namespace AutoSEO
                 { 1862270976, 1866465279 }   //111.0.0.0 - 111.63.255.255  移动 ,111*256^3 至 111*256^3 + 63*256^2 + 255*256 + 255 第一位超过2^8-1=127的用负数
         };
 
-        public static void Init() {
+        /// <summary>
+        /// 初始化数据
+        /// </summary>
+        public static void Init()
+        {
+            FetchData();
+            WatcherFile();
+        }
+
+        /// <summary>
+        /// 获取配置信息
+        /// </summary>
+        public static void FetchData()
+        {
             try
             {
+                ConfigurationManager.RefreshSection("appSettings");
                 words = ConfigurationManager.AppSettings["words"].Split(',');
                 threadCount = int.Parse(ConfigurationManager.AppSettings["threadCount"]);
                 IEnumerable<int> requestTime = ConfigurationManager.AppSettings["threadCount"].Split(',').Select(x => int.Parse(x));
                 startRequestTime = requestTime.First();
                 endRequestTime = requestTime.Last();
             }
-            catch {
+            catch(Exception ex)
+            {
                 words = new string[] { "国泰金业" };
                 threadCount = 1;
                 startRequestTime = 5;
                 endRequestTime = 10;
             }
+        }
+
+        /// <summary>
+        /// 监听文件变化
+        /// </summary>
+        private static void WatcherFile()
+        {
+            FileSystemWatcher watcher = new FileSystemWatcher();
+            watcher.Path = Environment.CurrentDirectory;
+            watcher.Filter = "*.config";
+
+            watcher.Changed += (object sender, FileSystemEventArgs e) => {
+                Thread.Sleep(100);
+                FetchData();
+            };
+            watcher.EnableRaisingEvents = true;
         }
     }
 }

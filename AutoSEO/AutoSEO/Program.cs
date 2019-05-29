@@ -32,7 +32,7 @@ namespace AutoSEO
                             logger.Info($"百度搜索的关键字：{word}");
                             int random = AppConstant.rd.Next(15) % 3;
                             DriverEnum driver = random == 0 ? DriverEnum.Firefox : DriverEnum.Chrome;
-                            WebElementSEO utils = new WebElementSEO(DriverEnum.Firefox, "www.guotaigold.hk");
+                            WebElementSEO utils = new WebElementSEO(driver, "www.guotaigold.hk");
                             //MWebElementSEO utils = new MWebElementSEO(driver, "m.guotaigold.hk");
                             utils.Jump(word);
                         });
