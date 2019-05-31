@@ -67,3 +67,21 @@ RabbitMQ是实现了高级消息队列协议（AMQP）的开源消息代理软�
 ### AutoSEO SEO自动点击的小工具
 这是一个百度自动刷点击量的小工具
 
+### SimpleEmail 邮件发送功能
+用linq的方式发送邮件，简单直接。
+``` C#
+var smtp = new SmtpClient("smtp.exmail.qq.com", 25);
+smtp.UseDefaultCredentials = true;
+smtp.Credentials = new NetworkCredential(EmailFrom, EmailPassword);
+smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+smtp.Port = EmailPort;
+smtp.EnableSsl = true;
+
+SimpleEmail.DefaultSender = smtp;
+SimpleEmail.From(EmailFrom, "系统邮件").To(EmailTo).Subject("主题").Body(content).Send();
+
+smtp.Dispose();
+```
+
+
+
