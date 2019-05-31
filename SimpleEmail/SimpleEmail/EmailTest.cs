@@ -16,7 +16,6 @@ namespace SimpleEmail
     {
         static string EmailFrom = ConfigurationManager.AppSettings["from"].ToString();
         static string EmailPassword = ConfigurationManager.AppSettings["key"].ToString();
-        static int EmailPort = int.Parse(ConfigurationManager.AppSettings["port"]);
         static string EmailTo = ConfigurationManager.AppSettings["to"].ToString();
 
         /// <summary>
@@ -24,7 +23,7 @@ namespace SimpleEmail
         /// </summary>
         /// <param name="content"></param>
         /// <returns></returns>
-        public static bool SendEmailForOriginal(string content)
+        public static bool SendEmailForOriginal()
         {
             MailMessage mail = new MailMessage();
             //设置发件人,发件人需要与设置的邮件发送服务器的邮箱一致
@@ -38,15 +37,14 @@ namespace SimpleEmail
             mail.Subject = "主题";
 
             //设置邮件内容
-            mail.Body = content;
+            mail.Body = "内容";
 
-            //设置邮件发送服务器,服务器根据你使用的邮箱而不同,可以到相应的 邮箱管理后台查看,下面是QQ的;
+            //设置邮件发送服务器,服务器根据你使用的邮箱而不同,可以到相应的 邮箱管理后台查看,下面是163的;
             //设置发送人的邮箱账号和密码，POP3/SMTP服务要开启, 密码要是POP3/SMTP等服务的授权码
-            var smtp = new SmtpClient("smtp.exmail.qq.com", 25);
+            var smtp = new SmtpClient("smtp.163.com");
             smtp.UseDefaultCredentials = true;
             smtp.Credentials = new NetworkCredential(EmailFrom, EmailPassword);
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtp.Port = EmailPort;
             smtp.EnableSsl = true;
 
             smtp.Send(mail);
@@ -63,11 +61,10 @@ namespace SimpleEmail
         {
             //设置邮件发送服务器,服务器根据你使用的邮箱而不同,可以到相应的 邮箱管理后台查看,下面是QQ的;
             //设置发送人的邮箱账号和密码，POP3/SMTP服务要开启, 密码要是POP3/SMTP等服务的授权码
-            var smtp = new SmtpClient("smtp.exmail.qq.com", 25);
+            var smtp = new SmtpClient("smtp.163.com");
             smtp.UseDefaultCredentials = true;
             smtp.Credentials = new NetworkCredential(EmailFrom, EmailPassword);
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtp.Port = EmailPort;
             smtp.EnableSsl = true;
 
             SimpleEmail.DefaultSender = smtp;
