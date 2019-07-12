@@ -80,5 +80,13 @@ SimpleEmail.From(EmailFrom, "系统邮件").To(EmailTo).Subject("主题").Body(c
 smtp.Dispose();
 ```
 
+### SimpleWindowsService .NET构建Windows服务
+一个简单的服务托管框架，用于使用.NET构建Windows服务
+> 1. 生成程序
+> 2. 以管理员身份启动cmd，找到程序路径
+> 3. 安装程序 xxx.exe install
+> 4. 启动程序 xxx.exe start
+> 5. 卸载程序 xxx.exe uninstall
+
 
 
