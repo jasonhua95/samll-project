@@ -88,5 +88,6 @@ smtp.Dispose();
 > 4. 启动程序 xxx.exe start
 > 5. 卸载程序 xxx.exe uninstall
 
-
+### EFNetNote .NET core的ef学习
+用.net core和EF实现的云笔记
 
