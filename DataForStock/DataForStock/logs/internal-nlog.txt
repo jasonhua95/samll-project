@@ -1,0 +1,84 @@
+2019-09-05 13:38:43.0717 Info Message Template Auto Format enabled
+2019-09-05 13:38:43.1704 Info Adding target FileTarget(Name=allfile)
+2019-09-05 13:38:43.2165 Info Found 21 configuration items
+2019-09-05 13:38:43.2290 Info Configuration initialized.
+2019-09-05 13:38:43.2409 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.6.7.10445. Product version: 4.6.7.
+2019-09-05 14:07:36.5592 Info Message Template Auto Format enabled
+2019-09-05 14:07:36.7162 Info Adding target FileTarget(Name=allfile)
+2019-09-05 14:07:36.7637 Info Found 21 configuration items
+2019-09-05 14:07:36.7819 Info Configuration initialized.
+2019-09-05 14:07:36.7954 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.6.7.10445. Product version: 4.6.7.
+2019-09-05 14:08:07.5479 Info AppDomain Shutting down. Logger closing...
+2019-09-05 14:08:07.5874 Info Logger has been shut down.
+2019-09-05 14:10:44.6013 Info Message Template Auto Format enabled
+2019-09-05 14:10:44.7791 Info Adding target FileTarget(Name=allfile)
+2019-09-05 14:10:44.8344 Info Found 21 configuration items
+2019-09-05 14:10:44.8482 Info Configuration initialized.
+2019-09-05 14:10:44.8482 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.6.7.10445. Product version: 4.6.7.
+2019-09-05 14:11:41.3167 Info Message Template Auto Format enabled
+2019-09-05 14:11:41.3969 Info Adding target FileTarget(Name=allfile)
+2019-09-05 14:11:41.4473 Info Found 21 configuration items
+2019-09-05 14:11:41.4603 Info Configuration initialized.
+2019-09-05 14:11:41.4761 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.6.7.10445. Product version: 4.6.7.
+2019-09-05 14:12:44.7068 Info Message Template Auto Format enabled
+2019-09-05 14:12:44.8466 Info Adding target FileTarget(Name=allfile)
+2019-09-05 14:12:44.9006 Info Found 21 configuration items
+2019-09-05 14:12:44.9175 Info Configuration initialized.
+2019-09-05 14:12:44.9265 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.6.7.10445. Product version: 4.6.7.
+2019-09-05 14:14:19.2683 Info Message Template Auto Format enabled
+2019-09-05 14:14:19.3757 Info Adding target FileTarget(Name=allfile)
+2019-09-05 14:14:19.4376 Info Found 21 configuration items
+2019-09-05 14:14:19.4521 Info Configuration initialized.
+2019-09-05 14:14:19.4642 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.6.7.10445. Product version: 4.6.7.
+2019-09-05 14:18:37.0269 Info Message Template Auto Format enabled
+2019-09-05 14:18:37.1761 Info Adding target FileTarget(Name=allfile)
+2019-09-05 14:18:37.2398 Info Found 21 configuration items
+2019-09-05 14:18:37.2398 Info Configuration initialized.
+2019-09-05 14:18:37.2620 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.6.7.10445. Product version: 4.6.7.
+2019-09-05 14:58:32.2284 Info Message Template Auto Format enabled
+2019-09-05 14:58:32.3465 Info Adding target FileTarget(Name=allfile)
+2019-09-05 14:58:32.3955 Info Found 21 configuration items
+2019-09-05 14:58:32.4149 Info Configuration initialized.
+2019-09-05 14:58:32.4350 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.6.7.10445. Product version: 4.6.7.
+2019-09-05 15:14:36.6000 Info Message Template Auto Format enabled
+2019-09-05 15:14:36.7990 Info Adding target FileTarget(Name=allfile)
+2019-09-05 15:14:36.8738 Info Found 21 configuration items
+2019-09-05 15:14:36.8879 Info Configuration initialized.
+2019-09-05 15:14:36.9019 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.6.7.10445. Product version: 4.6.7.
+2019-09-05 15:15:01.7441 Info Message Template Auto Format enabled
+2019-09-05 15:15:01.9032 Info Adding target FileTarget(Name=allfile)
+2019-09-05 15:15:01.9829 Info Found 21 configuration items
+2019-09-05 15:15:02.0025 Info Configuration initialized.
+2019-09-05 15:15:02.0467 Info AppDomain Shutting down. Logger closing...
+2019-09-05 15:15:02.0498 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.6.7.10445. Product version: 4.6.7.
+2019-09-05 15:15:02.0940 Info Logger has been shut down.
+2019-09-05 15:20:09.4334 Info Message Template Auto Format enabled
+2019-09-05 15:20:09.5577 Info Adding target FileTarget(Name=allfile)
+2019-09-05 15:20:09.6362 Info Found 21 configuration items
+2019-09-05 15:20:09.6480 Info Configuration initialized.
+2019-09-05 15:20:09.6637 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.6.7.10445. Product version: 4.6.7.
+2019-09-05 15:21:07.1263 Info Message Template Auto Format enabled
+2019-09-05 15:21:07.2106 Info Adding target FileTarget(Name=allfile)
+2019-09-05 15:21:07.2483 Info Found 21 configuration items
+2019-09-05 15:21:07.2602 Info Configuration initialized.
+2019-09-05 15:21:07.2742 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.6.7.10445. Product version: 4.6.7.
+2019-09-05 15:25:53.1959 Info Message Template Auto Format enabled
+2019-09-05 15:25:53.2985 Info Adding target FileTarget(Name=allfile)
+2019-09-05 15:25:53.3478 Info Found 21 configuration items
+2019-09-05 15:25:53.3478 Info Configuration initialized.
+2019-09-05 15:25:53.3737 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.6.7.10445. Product version: 4.6.7.
+2019-09-05 15:49:30.4430 Info Message Template Auto Format enabled
+2019-09-05 15:49:30.5374 Info Adding target FileTarget(Name=allfile)
+2019-09-05 15:49:30.5790 Info Found 21 configuration items
+2019-09-05 15:49:30.5911 Info Configuration initialized.
+2019-09-05 15:49:30.6009 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.6.7.10445. Product version: 4.6.7.
+2019-09-05 15:50:16.3201 Info Message Template Auto Format enabled
+2019-09-05 15:50:16.4208 Info Adding target FileTarget(Name=allfile)
+2019-09-05 15:50:16.4900 Info Found 21 configuration items
+2019-09-05 15:50:16.5211 Info Configuration initialized.
+2019-09-05 15:50:16.5339 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.6.7.10445. Product version: 4.6.7.
+2019-09-05 15:52:25.3923 Info Message Template Auto Format enabled
+2019-09-05 15:52:25.4780 Info Adding target FileTarget(Name=allfile)
+2019-09-05 15:52:25.5295 Info Found 21 configuration items
+2019-09-05 15:52:25.5430 Info Configuration initialized.
+2019-09-05 15:52:25.5531 Info NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 4.6.7.10445. Product version: 4.6.7.
