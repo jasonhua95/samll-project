@@ -20,9 +20,8 @@ namespace DataForStock.SchedulerService
             Schedule(() =>
             {
                 logger.Info($"定时任务开始运行");
-                //Task t = FetchDataService.FetchDataAsync();
-                //Task.WhenAny(t);
-                FetchDataService.Test2();
+                Task t = FetchDataService.FetchDataAsync();
+                Task.WhenAny(t);
                 logger.Info($"定时任务结束运行");
             }
             ).ToRunNow().AndEvery(1).Minutes();
