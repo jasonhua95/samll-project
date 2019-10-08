@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPPlusDemo", "EPPlusDemo\EPPlusDemo.csproj", "{CCB289FA-E5B7-47D2-B14C-D3BFB4352895}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCB289FA-E5B7-47D2-B14C-D3BFB4352895}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCB289FA-E5B7-47D2-B14C-D3BFB4352895}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCB289FA-E5B7-47D2-B14C-D3BFB4352895}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCB289FA-E5B7-47D2-B14C-D3BFB4352895}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8CE56706-02E6-42B0-881E-FD2A939C2F5B}
+	EndGlobalSection
+EndGlobal

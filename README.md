@@ -91,3 +91,6 @@ smtp.Dispose();
 ### EFNetNote .NET core的ef学习
 用.net core和EF实现的云笔记
 
+### EPPlusDemo .net core3.0的EPPlus学些
+用Epplus读取和生成excel
+
