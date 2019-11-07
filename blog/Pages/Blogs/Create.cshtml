@@ -1,0 +1,60 @@
+﻿@page
+@model blog.Pages.Blogs.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Blog</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Blog.Title" class="control-label"></label>
+                <input asp-for="Blog.Title" class="form-control" />
+                <span asp-validation-for="Blog.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Blog.Content" class="control-label"></label>
+                <input asp-for="Blog.Content" class="form-control" />
+                <span asp-validation-for="Blog.Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Blog.Categories" class="control-label"></label>
+                <select asp-for="Blog.Categories" asp-items="Model.selectCategoryItems"></select>
+                <input type="button" value="添加" class="btn btn-info btn-category" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Blog.Tags" class="control-label"></label>
+                <select asp-for="Blog.Tags" asp-items="Model.selectTagItems"></select>
+                <input type="button" value="添加" class="btn btn-info btn-tags" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".btn-category").on("click", function () {
+
+        });
+
+        $(".btn-tags").on("click", function () {
+
+        });
+    });
+</script>
+}

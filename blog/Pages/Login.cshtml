@@ -1,0 +1,47 @@
+﻿@page
+@model blog.Pages.LoginModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>博客后台管理</title>
+    <link rel="stylesheet" href="~/X-admin-2.2/css/font.css">
+    <link rel="stylesheet" href="~/X-admin-2.2/css/login.css">
+    <link rel="stylesheet" href="~/X-admin-2.2/css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="~/X-admin-2.2/lib/layui/layui.js" charset="utf-8"></script>
+    <!--[if lt IE 9]>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="login-bg">
+
+    <div class="login layui-anim layui-anim-up">
+        <div class="message">博客后台管理登录</div>
+        <div id="darkbannerwrap"></div>
+
+        <form method="post" class="layui-form">
+            <input asp-for="BlogUser.Name"  placeholder="用户名" type="text" lay-verify="required" class="layui-input">
+            <hr class="hr15">
+            <input asp-for="BlogUser.Password" lay-verify="required" placeholder="密码" type="password" class="layui-input">
+            <hr class="hr15">
+            <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
+            <hr class="hr20">
+            <p style="color:red" class="@(string.IsNullOrEmpty(Model.Message)?"":"hidden")">@Model.Message</p>
+        </form>
+    </div>
+
+    <script>$(function  () {
+            layui.use('form', function(){
+            });
+        })</script>
+    <!-- 底部结束 -->
+</body>
+</html>
+
