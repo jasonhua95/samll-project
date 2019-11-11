@@ -41,7 +41,7 @@ namespace JwtApiDemo.Controllers
 
             var claim = new List<Claim>{
                     new Claim(ClaimTypes.Name,login.User),
-                    new Claim(ClaimTypes.Role,$"{Guid.NewGuid()}")
+                    new Claim(ClaimTypes.Role,"Test")
                 };
 
             //建立增加策略的授权
@@ -69,7 +69,7 @@ namespace JwtApiDemo.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles ="Test")]
         public ActionResult<string> AuthValue()
         {
             var name = User.FindFirst(ClaimTypes.Name)?.Value;
