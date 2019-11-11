@@ -98,4 +98,11 @@ smtp.Dispose();
 ASP.NET Core Web Api3.0的jwt认证
 > SecretKey必须大于16位
 > Configure方法中添加app.UseAuthentication();
+> 基于策略的授权  
+
+```
+services.AddAuthorization(options => {
+			options.AddPolicy("OnlyTestAccess", policy => policy.RequireClaim("Test"));
+});
+```
 
