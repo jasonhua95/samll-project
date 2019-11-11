@@ -94,3 +94,8 @@ smtp.Dispose();
 ### EPPlusDemo .net core3.0的EPPlus学些
 用Epplus读取和生成excel
 
+### JwtApiDemo ASP.NET Core Web Api之JWT
+ASP.NET Core Web Api3.0的jwt认证
+> SecretKey必须大于16位
+> Configure方法中添加app.UseAuthentication();
+
