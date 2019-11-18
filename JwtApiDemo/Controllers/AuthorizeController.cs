@@ -23,17 +23,6 @@ namespace JwtApiDemo.Controllers
         private readonly ILogger<AuthorizeController> _logger;
         private readonly JwtSettings _jwtSettings;
 
-        #region 缓存数据，将来可以放到缓存数据库中
-        /// <summary>
-        /// 登录的用户，key:用户ID，value：token,refretoken,一次只能一个登录的时候用
-        /// </summary>
-        private static Dictionary<string, Tuple<string, string>> loginUserDict = new Dictionary<string, Tuple<string, string>>();
-        /// <summary>
-        /// 刷新token，key：refretoken，value：用户ID，过期时间
-        /// </summary>
-        private static Dictionary<string, Tuple<string, DateTime>> refreshTokenDict = new Dictionary<string, Tuple<string, DateTime>>();
-        #endregion
-
         public AuthorizeController(ILogger<AuthorizeController> logger, IOptions<JwtSettings> jwtSettings)
         {
             _logger = logger;
@@ -60,6 +49,22 @@ namespace JwtApiDemo.Controllers
                     new Claim(ClaimTypes.Role,"Test")
                 };
 
+            //登录的账户缓存
+            if (DataCache.loginUserDict.ContainsKey(login.User))
+            {
+                //这个时间可以调长点
+                if (DataCache.loginUserDict[login.User].Item3.AddSeconds(10) > DateTime.Now)
+                {
+                    return Ok(new { message = "已经有用户登录，请10S之后在登录，并且修改密码。" });
+                }
+                DataCache.loginUserDict.Remove(login.User);
+            } 
+            string tempToken = Guid.NewGuid().ToString();
+            string tempRefshToken = Guid.NewGuid().ToString();
+            DataCache.loginUserDict.Add(login.User, new Tuple<string, string, DateTime>(tempToken, tempRefshToken, DateTime.Now));            
+            DataCache.AddRefreshToken(login.User, tempRefshToken);
+            claim.Add(new Claim("token", tempToken));
+
             //建立增加策略的授权
             if (login.User == "Test") claim.Add(new Claim("Test", "Test"));
             if (login.User == "Test1") claim.Add(new Claim("Test", "Test1"));
@@ -74,8 +79,8 @@ namespace JwtApiDemo.Controllers
             //生成token  [注意]需要nuget添加Microsoft.AspNetCore.Authentication.JwtBearer包，并引用System.IdentityModel.Tokens.Jwt命名空间
             var token = new JwtSecurityToken(_jwtSettings.Issuer, _jwtSettings.Audience, claim, DateTime.Now, DateTime.Now.AddMinutes(30), creds);
 
-            
-            return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token) });
+
+            return Ok(new { token = new JwtSecurityTokenHandler().WriteToken(token), refreshtoken = tempRefshToken });//refreshtoken：jwt过期，刷新token
         }
 
         /// <summary>
