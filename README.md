@@ -2,7 +2,7 @@
 平时创建的小项目，项目名称【samll-project】创建错误，不做修改
 
 ### Github上指定项目的下载
- > 1. 点击[下载](https://minhaskamal.github.io/DownGit/#/home)
+ > 1. 点击[下载](https://minhaskamal.github.io/DownGit/#/home) 或者 [jasonhua下载](https://jasonhua95.github.io/DownGit)
  > 2. 输入下载的地址
  > 3. 例如：输入：https://github.com/jasonhua95/samll-project/tree/master/DistributedSession   下载DistributedSession项目
 
