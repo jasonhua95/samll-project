@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web2", "Web2\Web2.csproj", "{4B50AF75-65DB-4A7A-9E28-24FCFA11C37A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcelotWeb2", "Web2\OcelotWeb2.csproj", "{4B50AF75-65DB-4A7A-9E28-24FCFA11C37A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcelotStudy", "OcelotStudy\OcelotStudy.csproj", "{9B418025-7CD8-4AED-92FA-FF1E3A4C12DE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web1", "Web1\Web1.csproj", "{40BB7B0B-5948-401B-B003-4DE9ADD762F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcelotWeb1", "Web1\OcelotWeb1.csproj", "{40BB7B0B-5948-401B-B003-4DE9ADD762F4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
